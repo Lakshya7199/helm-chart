@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: front-deployment
   labels:
-    {{- include "demochart.labels" . | nindent 4 }}
+    component: web-f
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "demochart.selectorLabels" . | nindent 6 }}
+      component: web-f
   template:
     metadata:
       labels:
-        {{- include "demochart.selectorLabels" . | nindent 8 }}
+        component: web-f
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -43,17 +43,3 @@ spec:
           configMap:
             name: my-config     
 
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
