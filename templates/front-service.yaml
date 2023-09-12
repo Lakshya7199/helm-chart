@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: front-service
   labels:
-    {{- include "demochart.labels" . | nindent 4 }}
+   component: web-f
 spec:
   type: {{ .Values.frontend.servicetype }}
   ports:
@@ -11,4 +11,4 @@ spec:
       targetPort: {{ .Values.frontend.targetPort }}
       protocol: TCP
   selector:
-    {{- include "demochart.selectorLabels" . | nindent 4 }}
+    component: web-f
